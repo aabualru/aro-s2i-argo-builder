@@ -2,16 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: teranet-app
-  name: teranet-app
-  namespace: helloworld
+    app: teranet-ws
+  name: teranet-ws
+  namespace: helloworld-ws
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: teranet-app
+      app: teranet-ws
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -21,7 +21,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: teranet-app
+        app: teranet-ws
     spec:
       containers:
       - image: teranetacr.azurecr.io/my-dev/helloworld-ws:latest
@@ -46,8 +46,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: teranet-app
-  name: teranet-app
+    app: teranet-ws
+  name: teranet-ws
   namespace: helloworld
 spec:
   clusterIP: 172.30.35.17
@@ -62,7 +62,7 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: teranet-app
+    app: teranet-ws
   sessionAffinity: None
   type: ClusterIP
 status:
@@ -76,16 +76,16 @@ metadata:
   annotations:
     openshift.io/host.generated: "true"
   labels:
-    app: teranet-app
-  name: teranet-app
+    app: teranet-ws
+  name: teranet-ws
   namespace: helloworld
 spec:
-  host: teranet-app-helloworld-ws.apps.a5tpcu3e.eastus.aroapp.io
+  host: teranet-ws-helloworld-ws.apps.a5tpcu3e.eastus.aroapp.io
   port:
     targetPort: 8080
   to:
     kind: Service
-    name: teranet-app
+    name: teranet-ws
     weight: 100
   wildcardPolicy: None
 status:
@@ -93,7 +93,7 @@ status:
   - conditions:
     - status: "True"
       type: Admitted
-    host: teranet-app-helloworld-ws.apps.a5tpcu3e.eastus.aroapp.io
+    host: teranet-ws-helloworld-ws.apps.a5tpcu3e.eastus.aroapp.io
     routerCanonicalHostname: router-default.apps.a5tpcu3e.eastus.aroapp.io
     routerName: default
     wildcardPolicy: None
