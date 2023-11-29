@@ -50,9 +50,9 @@ metadata:
   name: teranet-ws
   namespace: helloworld
 spec:
-  clusterIP: 172.30.35.17
+  clusterIP: 172.30.35.18
   clusterIPs:
-  - 172.30.35.17
+  - 172.30.35.18
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4
