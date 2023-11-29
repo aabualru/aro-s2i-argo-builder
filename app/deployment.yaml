@@ -24,7 +24,7 @@ spec:
         app: teranet-app
     spec:
       containers:
-      - image: teranetacr.azurecr.io/my-dev/helloworld-java:latest
+      - image: teranetacr.azurecr.io/my-dev/helloworld-ws:latest
         imagePullPolicy: Always
         name: helloworld-java
         ports:
@@ -80,7 +80,7 @@ metadata:
   name: teranet-app
   namespace: helloworld
 spec:
-  host: teranet-app-helloworld.apps.a5tpcu3e.eastus.aroapp.io
+  host: teranet-app-helloworld-ws.apps.a5tpcu3e.eastus.aroapp.io
   port:
     targetPort: 8080
   to:
@@ -93,7 +93,7 @@ status:
   - conditions:
     - status: "True"
       type: Admitted
-    host: teranet-app-helloworld.apps.a5tpcu3e.eastus.aroapp.io
+    host: teranet-app-helloworld-ws.apps.a5tpcu3e.eastus.aroapp.io
     routerCanonicalHostname: router-default.apps.a5tpcu3e.eastus.aroapp.io
     routerName: default
     wildcardPolicy: None
