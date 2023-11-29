@@ -48,7 +48,7 @@ metadata:
   labels:
     app: teranet-ws
   name: teranet-ws
-  namespace: helloworld
+  namespace: helloworld-ws
 spec:
   clusterIP: 172.30.35.18
   clusterIPs:
@@ -78,7 +78,7 @@ metadata:
   labels:
     app: teranet-ws
   name: teranet-ws
-  namespace: helloworld
+  namespace: helloworld-ws
 spec:
   host: teranet-ws-helloworld-ws.apps.a5tpcu3e.eastus.aroapp.io
   port:
