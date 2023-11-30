@@ -73,7 +73,7 @@ public class ClientArqIT {
 
         // Get a response from the WebService
         final String response = client.sayHello();
-        assertEquals(response, "Hello World!");
+        assertEquals(response, "Hello Red Hat!");
 
         System.out.println("[WebService] " + response);
 
