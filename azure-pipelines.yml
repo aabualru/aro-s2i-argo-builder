@@ -7,7 +7,7 @@ trigger:
     - README.md
 
 pool:
-  name: teranet-s2i-jboss
+  name: s2i-image-build
 
 variables:
   project-name-dev: 'my-dev'
