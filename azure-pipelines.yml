@@ -24,7 +24,7 @@ stages:
       displayName: 'Build and Push Docker image'
       inputs:
         command: 'buildAndPush'
-        containerRegistry: 'teranet-acr'
+        containerRegistry: 's2ipoc'
         buildContext: '**'
         repository: '$(project-name-dev)/$(image-name)'
         Dockerfile: 'Dockerfile'
