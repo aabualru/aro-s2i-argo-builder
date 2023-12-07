@@ -2,16 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: teranet-ws
-  name: teranet-ws
-  namespace: helloworld-ws
+    app: s2i-poc
+  name: s2i-poc
+  namespace: helloworld-s2i
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: teranet-ws
+      app: s2i-poc
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -21,10 +21,10 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: teranet-ws
+        app: s2i-poc
     spec:
       containers:
-      - image: teranetacr.azurecr.io/my-dev/helloworld-ws:latest
+      - image: s2ipoc.azurecr.io/my-dev/helloworld-ws:latest
         imagePullPolicy: Always
         name: helloworld-java
         ports:
@@ -46,9 +46,9 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: teranet-ws
-  name: teranet-ws
-  namespace: helloworld-ws
+    app: s2i-poc
+  name: s2i-poc
+  namespace: helloworld-s2i
 spec:
   clusterIP: 172.30.35.18
   clusterIPs:
@@ -62,7 +62,7 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: teranet-ws
+    app: s2i-poc
   sessionAffinity: None
   type: ClusterIP
 status:
@@ -76,16 +76,16 @@ metadata:
   annotations:
     openshift.io/host.generated: "true"
   labels:
-    app: teranet-ws
-  name: teranet-ws
-  namespace: helloworld-ws
+    app: s2i-poc
+  name: s2i-poc
+  namespace: helloworld-s2i
 spec:
-  host: teranet-ws-helloworld-ws.apps.a5tpcu3e.eastus.aroapp.io
+  host: s2i-poc-helloworld-s2i.apps.a5tpcu3e.eastus.aroapp.io
   port:
     targetPort: 8080
   to:
     kind: Service
-    name: teranet-ws
+    name: s2i-poc
     weight: 100
   wildcardPolicy: None
 status:
@@ -93,7 +93,7 @@ status:
   - conditions:
     - status: "True"
       type: Admitted
-    host: teranet-ws-helloworld-ws.apps.a5tpcu3e.eastus.aroapp.io
+    host: s2i-poc-helloworld-s2i.apps.a5tpcu3e.eastus.aroapp.io
     routerCanonicalHostname: router-default.apps.a5tpcu3e.eastus.aroapp.io
     routerName: default
     wildcardPolicy: None
