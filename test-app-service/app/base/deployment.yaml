@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: s2i-poc
+  name: s2i-poc
+  namespace: helloworld-s2i
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: s2i-poc
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: s2i-poc
+    spec:
+      containers:
+      - image: <acr-registry-name>.azurecr.io/my-dev/helloworld-ws:latest
+        imagePullPolicy: Always
+        name: helloworld-java
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: s2i-poc
+  name: s2i-poc
+  namespace: helloworld-s2i
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: s2i-poc
+  sessionAffinity: None
+  type: ClusterIP
+
+---
+
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: "true"
+  labels:
+    app: s2i-poc
+  name: s2i-poc
+  namespace: helloworld-s2i
+spec:
+  host: s2i-poc-helloworld-s2i.apps.<cluster-name>.<region>.aroapp.io
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: s2i-poc
+    weight: 100
+  wildcardPolicy: None
