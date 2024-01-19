@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: helloworld-s2i
+  namespace: <gitops-argo-namespace> 
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: img-alias=<acr-registry-name>.azurecr.io/my-dev/helloworld-ws
+    argocd-image-updater.argoproj.io/img-alias.force-update: "true"
+    argocd-image-updater.argoproj.io/img-alias.pull-secret: pullsecret:openshift-gitops/acr
+    argocd-image-updater.argoproj.io/img-alias.update-strategy: latest
+spec:
+  destination:
+    namespace: helloworld-s2i
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+  project: default
+  source:
+    path: test-app-service/app/
+    repoURL: <git-repo-url>
+    targetRevision: main
