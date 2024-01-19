@@ -13,12 +13,11 @@ resources:
 - repo: self
 
 pool:
-  name: s2i-image-build
+  name: <agent-pool>
 
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '<docker-connection-name>'
-  #imageRepository: 'siimageupdaterpoc'
   containerRegistry: '<acr-registry-name>.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/test-app-service/Dockerfile'
   tag: '$(Build.BuildId)'
